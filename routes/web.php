@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\AboutController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\HomeController;
 use App\Models\Category;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
@@ -17,39 +20,24 @@ use App\Http\Controllers\RegisterController;
 |
 */
 
-Route::get('/', function () {
-    return view('home', [
-        "active" => "home",
-        "title" => "Home"
-    ]);
-});
+Route::get('/', [HomeController::class, 'index']);
 
-Route::get('/about', function () {
-    return view('about', [
-        "title" => "About",
-        "active" => "about",
-        "name" => "Calviano Nathanel",
-        "email" => "calvianoid@gmail.com",
-        "image" => "logo.png"
-    ]);
-});
+Route::get('/about', [AboutController::class, 'index']);
 
-// Halaman All Post
+// Menampilkan Halaman All Post
 Route::get('/posts', [PostController::class, 'index']);
 
-// Halaman Single Post
+// Menampilkan Halaman Single Post
 Route::get('posts/{post:slug}', [PostController::class, 'show']);
 
-Route::get('/categories', function() {
-    return view('categories', [
-        'title' => 'Post Categories',
-        'active' => 'categories',
-        'categories' => Category::all()
-    ]);
-});
+// Menampilkan Halaman Categories
+Route::get('/categories', [CategoryController::class, 'index']);
 
+// Menampilkan Halaman Login
 Route::get('/login', [LoginController::class, 'index']);
 
+// Menampilkan Halaman Register
 Route::get('/register', [RegisterController::class, 'index']);
 
+// Menyimpan Data Register
 Route::post('/register', [RegisterController::class, 'store']);
