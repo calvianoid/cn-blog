@@ -25,29 +25,19 @@ Route::get('/', [HomeController::class, 'index']);
 
 Route::get('/about', [AboutController::class, 'index']);
 
-// Menampilkan Halaman All Post
-Route::get('/posts', [PostController::class, 'index']);
+Route::get('/posts', [PostController::class, 'index']); // Menampilkan Halaman All Post
+Route::get('posts/{post:slug}', [PostController::class, 'show']); // Menampilkan Halaman Single Post
 
-// Menampilkan Halaman Single Post
-Route::get('posts/{post:slug}', [PostController::class, 'show']);
+Route::get('/categories', [CategoryController::class, 'index']); // Menampilkan Halaman Categories
 
-// Menampilkan Halaman Categories
-Route::get('/categories', [CategoryController::class, 'index']);
-
-// Menampilkan Halaman Login
-Route::get('/login', [LoginController::class, 'index'])->middleware('guest')->name('login');
-
-// Authenticate Login
-Route::post('/login', [LoginController::class, 'authenticate']);
-
+Route::get('/login', [LoginController::class, 'index'])->middleware('guest')->name('login'); // Menampilkan Halaman Login
+Route::post('/login', [LoginController::class, 'authenticate']); // Authenticate Login
 Route::post('/logout', [LoginController::class, 'logout']);
 
-// Menampilkan Halaman Register
-Route::get('/register', [RegisterController::class, 'index'])->middleware('guest');
+Route::get('/register', [RegisterController::class, 'index'])->middleware('guest'); // Menampilkan Halaman Register
+Route::post('/register', [RegisterController::class, 'store']); // Menyimpan Data Register
 
-// Menyimpan Data Register
-Route::post('/register', [RegisterController::class, 'store']);
-
+// Menampilkan Halaman Dashboard
 Route::get('/dashboard', function(){
     return view('dashboard.index');
 })->middleware('auth');
