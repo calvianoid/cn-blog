@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Models\Category;
 use Illuminate\Support\Facades\Route;
@@ -34,10 +35,17 @@ Route::get('posts/{post:slug}', [PostController::class, 'show']);
 Route::get('/categories', [CategoryController::class, 'index']);
 
 // Menampilkan Halaman Login
-Route::get('/login', [LoginController::class, 'index']);
+Route::get('/login', [LoginController::class, 'index'])->middleware('guest')->name('login');
+
+// Authenticate Login
+Route::post('/login', [LoginController::class, 'authenticate']);
+
+Route::post('/logout', [LoginController::class, 'logout']);
 
 // Menampilkan Halaman Register
-Route::get('/register', [RegisterController::class, 'index']);
+Route::get('/register', [RegisterController::class, 'index'])->middleware('guest');
 
 // Menyimpan Data Register
 Route::post('/register', [RegisterController::class, 'store']);
+
+Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth');
