@@ -5,7 +5,7 @@
     <h1 class="h2">My Post, {{ auth()->user()->name }}</h1>
   </div>
   @if (session()->has('success'))
-  <div class="alert alert-success alert-dismissible fade show" role="alert">
+  <div class="alert alert-success alert-dismissible fade show col-lg-8" role="alert">
     {{ session('success') }}
   </div>    
   @endif
@@ -30,7 +30,11 @@
           <td>
             <a href="/dashboard/posts/{{ $post->slug }}" class="badge bg-info"><span data-feather="eye"></span></a>
             <a href="#" class="badge bg-warning"><span data-feather="edit"></span></a>
-            <a href="#" class="badge bg-danger"><span data-feather="x-circle"></span></a>
+            <form action="/dashboard/posts/{{ $post->slug }}" method="post" class="d-inline">
+              @method('delete')
+              @csrf
+              <button class="badge bg-danger border-0" onclick="return confirm('Are you sure?')"><span data-feather="x-circle"></span></button>
+            </form>
           </td>
         </tr>
         @endforeach
