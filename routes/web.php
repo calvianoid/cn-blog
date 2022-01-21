@@ -57,8 +57,8 @@ Route::post('/logout', [LoginController::class, 'logout']); //Logout
 Route::get('/register', [RegisterController::class, 'index'])->middleware('guest'); // Menampilkan Halaman Register
 Route::post('/register', [RegisterController::class, 'store']); // Menyimpan Data Register
 
+Route::resource('/dashboard/posts', DashboardPostController::class)->middleware('auth'); //Store, Show, Edit, Update, Destroy My Post
 Route::get('/dashboard/posts/checkSlug', [DashboardPostController::class, 'checkSlug'])->middleware('auth');
 
-Route::resource('/dashboard/posts', DashboardPostController::class)->middleware('auth'); //Store, Show, Edit, Update, Destroy My Post
-
 Route::resource('/dashboard/categories', AdminCategoryController::class)->except('show')->middleware('admin');
+Route::get('/dashboard/categories/checkSlug', [AdminCategoryController::class, 'checkSlug'])->middleware('auth');
